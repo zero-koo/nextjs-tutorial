@@ -1,19 +1,28 @@
-import Head from 'next/head'
-import Link from 'next/link'
-import Layout from '../components/layout'
-import { getSortedPostsData } from '../lib/posts'
+import Head from 'next/head';
+import Link from 'next/link';
+import Date from '../components/date';
+import Layout from '../components/layout';
+import { getSortedPostsData } from '../lib/posts';
 import utilStyles from '../styles/utils.module.css';
 
-export async function getStaticProps() {
-  const allPostsData = getSortedPostsData()
+export function getStaticProps() {
+  const allPostsData = getSortedPostsData();
   return {
     props: {
-      allPostsData
-    }
-  }
+      allPostsData,
+    },
+  };
 }
 
-export default function Home({ allPostsData }) {
+type HomeProps = {
+  allPostsData: {
+    id: number,
+    date: string,
+    title: string,
+  }[],
+}
+
+export default function Home({ allPostsData }: HomeProps) {
   return (
     <Layout home>
       <Head>
@@ -21,7 +30,8 @@ export default function Home({ allPostsData }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <h1 className="title">
-        Read{' '}
+        Read
+        {' '}
         <Link href="/posts/first-post">
           <a>this page!</a>
         </Link>
@@ -43,5 +53,5 @@ export default function Home({ allPostsData }) {
         </ul>
       </section>
     </Layout>
-  )
+  );
 }
